@@ -1,0 +1,51 @@
+body {
+  /* background-image: url(../img/bg.jpg); */
+  color: aliceblue;
+  background-size: cover;
+  /* -moz-transform: scale(0.9, 0.9); */
+  zoom: 0.8;
+  zoom: 80%;
+}
+
+form {
+  width: 80%;
+  padding-top: 2em;
+}
+
+th {
+  font-weight: 20px;
+  border: 1px solid #467740;
+  background-color: aliceblue;
+}
+
+.table-dark {
+opacity: .95;
+}
+
+.delBtn:hover{
+cursor: pointer;
+}
+
+.navbar {
+
+  background-color:rgba(245, 255, 250, 0);
+
+}
+
+.nav{
+
+margin-top: 1em;
+}
+.nav-item{
+
+  margin-right:auto;
+}
+
+#caption{
+
+  background-color:rgba(75, 74, 74, 0.747);
+  max-width:max-content;
+  border-radius: 3%;
+  font: serif;
+  font-size: 30pt;
+}
