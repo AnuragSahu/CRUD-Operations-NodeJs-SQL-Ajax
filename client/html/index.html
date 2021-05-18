@@ -13,20 +13,23 @@
 
 <body>
   <div id="content">
-    <p><i>a user's ID must be unique</i></p>
     <div id="container">
 
     </div>
     <form>
       <fieldset>
         <legend id="caption">Add a User:</legend>
+        <p>*Note that the Id should be Unique and Not Null.</p>
         <br>
-        <input type="text" placeholder="id" id="userID" />
-        <input type="text" placeholder="name" id="userName" />
-        <input type="text" placeholder="location" id="location" />
-        <input type="text" placeholder="gas vehicle" id="gasBool" />
-        <input type="text" placeholder="emission" id="emission" />
+        <input type="text" placeholder="identification" id="identification" />
+        <input type="text" placeholder="First Name" id="firstName" />
+        <input type="text" placeholder="LastName" id="lastName" />
+        <input type="text" placeholder="Father Name" id="fatherName" />
+        <input type="text" placeholder="Mother Name" id="motherName" />
+        <input type="text" placeholder="Siblings" id="siblings" /> <br>
+        <center>
         <input type="button" id="submit-btn" class="btn btn-success" value="Submit" />
+      </center>
       </fieldset>
     </form>
     <p id="status"></p>

@@ -26,25 +26,25 @@ app.get('/', function (req, res) {
     multipleStatements: true
   });
 
-  const createDBAndTables = `CREATE DATABASE IF NOT EXISTS assignment;
-  use assignment;
-  CREATE TABLE IF NOT EXISTS appUser (
-  userID varchar(15) NOT NULL,
-  userName varchar(20),
-  location varchar(30),
-  gasBool varchar(30),
-  emission int(10),
-  PRIMARY KEY (userID));
-  INSERT IGNORE INTO appUser (userID, userName, location, gasBool, emission) values ('mhav1', 'madhav', 'vancouver', 'no', '23');
-  INSERT IGNORE INTO appUser (userID, userName, location, gasBool, emission) values ('slando', 'sam', 'burnaby', 'yes', '27');
-  INSERT IGNORE INTO appUser (userID, userName, location, gasBool, emission) values ('jryue', 'john', 'surrey', 'no', '12');
-  INSERT IGNORE INTO appUser (userID, userName, location, gasBool, emission) values ('hsaini123', 'harleen', 'vancouver', 'no', '25');
-  INSERT IGNORE INTO appUser (userID, userName, location, gasBool, emission) values ('aFerg101', 'aaron', 'richmond', 'yes', '32');
-  INSERT IGNORE INTO appUser (userID, userName, location, gasBool, emission) values ('canucksfan7', 'dustin', 'north vancouer', 'yes', '23');
-  INSERT IGNORE INTO appUser (userID, userName, location, gasBool, emission) values ('ecoHenry', 'henry', 'vanouver', 'yes', '14');
-  INSERT IGNORE INTO appUser (userID, userName, location, gasBool, emission) values ('scottVan1996', 'scott', 'downtown', 'no', '87');
-  INSERT IGNORE INTO appUser (userID, userName, location, gasBool, emission) values ('smithy12', 'smith', 'burnaby', 'no', '27');
-  INSERT IGNORE INTO appUser (userID, userName, location, gasBool, emission) values ('thisJustIn', 'justin', 'surrey', 'yes', '23');`;
+  const createDBAndTables = `CREATE DATABASE IF NOT EXISTS family;
+  use family;
+  CREATE TABLE IF NOT EXISTS relatives (
+  identification varchar(10) NOT NULL,
+  firstName varchar(20),
+  lastName varchar(20),
+  fatherName varchar(20),
+  motherName varchar(20),
+  siblings int(10),
+  PRIMARY KEY (identification));
+  INSERT IGNORE INTO relatives (identification, firstName, lastName, fatherName, motherName, siblings) values ('0', 'abcd','efgh','ijkl','mnop','45');
+  INSERT IGNORE INTO relatives (identification, firstName, lastName, fatherName, motherName, siblings) values ('1', 'abcd','efgh','ijkl','mnop','45');
+  INSERT IGNORE INTO relatives (identification, firstName, lastName, fatherName, motherName, siblings) values ('2', 'abcd','efgh','ijkl','mnop','45');
+  INSERT IGNORE INTO relatives (identification, firstName, lastName, fatherName, motherName, siblings) values ('3', 'abcd','efgh','ijkl','mnop','45');
+  INSERT IGNORE INTO relatives (identification, firstName, lastName, fatherName, motherName, siblings) values ('4', 'abcd','efgh','ijkl','mnop','45');
+  INSERT IGNORE INTO relatives (identification, firstName, lastName, fatherName, motherName, siblings) values ('5', 'abcd','efgh','ijkl','mnop','45');
+  INSERT IGNORE INTO relatives (identification, firstName, lastName, fatherName, motherName, siblings) values ('6', 'abcd','efgh','ijkl','mnop','45');
+  INSERT IGNORE INTO relatives (identification, firstName, lastName, fatherName, motherName, siblings) values ('7', 'abcd','efgh','ijkl','mnop','45');
+  INSERT IGNORE INTO relatives (identification, firstName, lastName, fatherName, motherName, siblings) values ('8', 'abcd','efgh','ijkl','mnop','45'); `;
 
   connection.connect();
   connection.query(createDBAndTables, function (error, results, fields) {
@@ -66,14 +66,14 @@ app.get('/get-users', function (req, res) {
     host: 'localhost',
     user: 'root',
     password: 'Password@123',
-    database: 'assignment'
+    database: 'family'
   });
   connection.connect();
-  connection.query('SELECT * FROM appUser', function (error, results, fields) {
+  connection.query('SELECT * FROM relatives', function (error, results, fields) {
     if (error) {
       throw error;
     }
-    console.log('Rows returned are: ', results);
+    // console.log('Rows returned are: ', results);
     res.send({
       status: "success",
       rows: results
@@ -95,26 +95,27 @@ app.use(bodyParser.json());
 app.post('/add-user', function (req, res) {
   res.setHeader('Content-Type', 'application/json');
 
-  console.log("username", req.body.userName);
-  console.log("location", req.body.location);
-  console.log("gas vehicle", req.body.gasBool);
-  console.log("emissions", req.body.emission);
+  console.log("firstName", req.body.firstName);
+  console.log("lastName", req.body.lastName);
+  console.log("fatherName", req.body.fatherName);
+  console.log("gas vehicle", req.body.motherName);
+  console.log("siblingss", req.body.siblings);
 
   let connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     password: 'Password@123',
-    database: 'assignment'
+    database: 'family'
   });
   connection.connect();
 
-  connection.query('INSERT INTO appUser (userID, userName, location, gasBool, emission) values (?, ?, ?, ?, ?)',
-    [req.body.userID, req.body.userName, req.body.location, req.body.gasBool, req.body.emission],
+  connection.query('INSERT INTO relatives (identification, firstName,lastName, fatherName, motherName, siblings) values (?, ?, ?, ?, ?, ?)',
+    [req.body.identification, req.body.firstName, req.body.lastName, req.body.fatherName, req.body.motherName, req.body.siblings],
     function (error, results, fields) {
       if (error) {
         throw error;
       }
-      console.log('Rows returned are: ', results);
+      // console.log('Rows returned are: ', results);
       res.send({
         status: "success",
         msg: "Recorded added."
@@ -125,24 +126,26 @@ app.post('/add-user', function (req, res) {
 
 });
 
-app.post('/update-userBool', function (req, res) {
+app.post('/update-motherName', function (req, res) {
   res.setHeader('Content-Type', 'application/json');
 
   let connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     password: 'Password@123',
-    database: 'assignment'
+    database: 'family'
   });
   connection.connect();
-
-  connection.query('UPDATE appUser SET gasBool = ? WHERE userID = ?',
-    [req.body.gasBool, req.body.id],
+  // console.log(req.body.motherName);
+  // console.log(req.body.id);
+  connection.query('UPDATE relatives SET motherName = ? WHERE identification = ?',
+    [req.body.motherName, req.body.id],
     function (error, results, fields) {
       if (error) {
         throw error;
       }
-      console.log('Rows returned are: ', results);
+      // console.log('Called Mother Update');
+      // console.log('Rows returned are: ', results);
       res.send({
         status: "success",
         msg: "Recorded updated."
@@ -152,52 +155,24 @@ app.post('/update-userBool', function (req, res) {
   connection.end();
 
 });
-app.post('/update-userName', function (req, res) {
+app.post('/update-firstName', function (req, res) {
   res.setHeader('Content-Type', 'application/json');
 
   let connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     password: 'Password@123',
-    database: 'assignment'
+    database: 'family'
   });
   connection.connect();
 
-  connection.query('UPDATE appUser SET userName = ? WHERE userID = ?',
-    [req.body.userName, req.body.id],
+  connection.query('UPDATE relatives SET firstName = ? WHERE identification = ?',
+    [req.body.firstName, req.body.id],
     function (error, results, fields) {
       if (error) {
         throw error;
       }
-      console.log('Rows returned are: ', results);
-      res.send({
-        status: "success",
-        msg: "Recorded updated."
-      });
-
-    });
-  connection.end();
-
-});
-
-app.post('/update-userLocation', function (req, res) {
-  res.setHeader('Content-Type', 'application/json');
-
-  let connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: 'Password@123',
-    database: 'assignment'
-  });
-  connection.connect();
-
-  connection.query('UPDATE appUser SET location = ? WHERE userID = ?',
-    [req.body.location, req.body.id],
-    function (error, results, fields) {
-      if (error) {
-        throw error;
-      }
-      console.log('Rows returned are: ', results);
+      // console.log('Rows returned are: ', results);
       res.send({
         status: "success",
         msg: "Recorded updated."
@@ -208,24 +183,80 @@ app.post('/update-userLocation', function (req, res) {
 
 });
 
-app.post('/update-userEmission', function (req, res) {
+app.post('/update-lastName', function (req, res) {
   res.setHeader('Content-Type', 'application/json');
 
   let connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     password: 'Password@123',
-    database: 'assignment'
+    database: 'family'
   });
   connection.connect();
 
-  connection.query('UPDATE appUser SET emission = ? WHERE userID = ?',
-    [req.body.emission, req.body.id],
+  connection.query('UPDATE relatives SET lastName = ? WHERE identification = ?',
+    [req.body.lastName, req.body.id],
     function (error, results, fields) {
       if (error) {
         throw error;
       }
-      console.log('Rows returned are: ', results);
+      // console.log('Rows returned are: ', results);
+      res.send({
+        status: "success",
+        msg: "Recorded updated."
+      });
+
+    });
+  connection.end();
+
+});
+
+app.post('/update-userfatherName', function (req, res) {
+  res.setHeader('Content-Type', 'application/json');
+
+  let connection = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: 'Password@123',
+    database: 'family'
+  });
+  connection.connect();
+
+  connection.query('UPDATE relatives SET fatherName = ? WHERE identification = ?',
+    [req.body.fatherName, req.body.id],
+    function (error, results, fields) {
+      if (error) {
+        throw error;
+      }
+      // console.log('Rows returned are: ', results);
+      res.send({
+        status: "success",
+        msg: "Recorded updated."
+      });
+
+    });
+  connection.end();
+
+});
+
+app.post('/update-usersiblings', function (req, res) {
+  res.setHeader('Content-Type', 'application/json');
+
+  let connection = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: 'Password@123',
+    database: 'family'
+  });
+  connection.connect();
+
+  connection.query('UPDATE relatives SET siblings = ? WHERE identification = ?',
+    [req.body.siblings, req.body.id],
+    function (error, results, fields) {
+      if (error) {
+        throw error;
+      }
+      // console.log('Rows returned are: ', results);
       res.send({
         status: "success",
         msg: "Recorded updated."
@@ -244,17 +275,17 @@ app.post('/delete-user', function (req, res) {
     host: 'localhost',
     user: 'root',
     password: 'Password@123',
-    database: 'assignment'
+    database: 'family'
   });
   connection.connect();
 
-  connection.query('DELETE FROM appUser WHERE userID = ?',
-    [req.body.userID],
+  connection.query('DELETE FROM relatives WHERE identification = ?',
+    [req.body.identification],
     function (error, results, fields) {
       if (error) {
         throw error;
       }
-       console.log('Rows returned are: ', results);
+      //  console.log('Rows returned are: ', results);
       res.send({
         status: "success",
         msg: "Recorded deleted."
